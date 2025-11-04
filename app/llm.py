@@ -3,7 +3,6 @@ from google import genai
 from google.genai import types 
 
 def llm_suggest_command(description: str) -> str | None:
-    os.environ["GEMINI_API_KEY"] = "AIzaSyA_4GMmtm8aH3t-bbVRdSlDHeUvP3ePjj8"
     if not os.getenv("GEMINI_API_KEY"):
         return f'echo "[AI preview] {description}"'
 
