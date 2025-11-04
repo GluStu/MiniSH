@@ -29,13 +29,14 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # Run the startup script
-./your_project.sh
+./your_program.sh
 
 If ./your_project.sh doesn’t run, make it executable first:
-chmod +x your_project.sh
+chmod +x your_program.sh
 
 # Enter your Gemini API key when prompted
 
-Wanr to use LLM:
+Wanna to use LLM?:
 command:
 ai "your query"
+
