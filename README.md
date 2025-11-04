@@ -29,7 +29,8 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # Run the startup script
-./your_program.sh
+dos2unix myfile.sh
+./your_program.sh or bash your_program.sh
 
 If ./your_project.sh doesn’t run, make it executable first:
 chmod +x your_program.sh
@@ -39,4 +40,5 @@ chmod +x your_program.sh
 Wanna to use LLM?:
 command:
 ai "your query"
+
 
