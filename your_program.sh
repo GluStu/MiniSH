@@ -21,15 +21,23 @@ fi
 if ! grep -q '^export GEMINI_API_KEY=' "$ENV_FILE"; then
     echo "Gemini API key not found."
     read -p "Enter your Gemini API key: " GEMINI_API_KEY
-    set_env_var "GEMINI_API_KEY" "$GEMINI_API_KEY"
+    echo "export GEMINI_API_KEY=\"$GEMINI_API_KEY\"" >> "$ENV_FILE"
+    export GEMINI_API_KEY="$GEMINI_API_KEY"
     echo "API key saved."
 fi
 
 HOME_PATH="$HOME"
 BIN_PATH="$(command -v python3 | xargs dirname)"
 
-set_env_var "HOME_PATH" "$HOME_PATH"
-set_env_var "BIN_PATH" "$BIN_PATH"
+if ! grep -q '^export HOME_PATH=' "$ENV_FILE"; then
+    echo "export HOME_PATH=\"$HOME_PATH\"" >> "$ENV_FILE"
+    export HOME_PATH="$HOME_PATH"
+fi
+
+if ! grep -q '^export BIN_PATH=' "$ENV_FILE"; then
+    echo "export BIN_PATH=\"$BIN_PATH\"" >> "$ENV_FILE"
+    export BIN_PATH="$BIN_PATH"
+fi
 
 set -a
 source "$ENV_FILE"
@@ -40,18 +48,5 @@ echo "  GEMINI_API_KEY=${GEMINI_API_KEY:0:6}******"
 echo "  HOME_PATH=$HOME_PATH"
 echo "  BIN_PATH=$BIN_PATH"
 echo ""
-
-if [ ! -d "$VENV_DIR" ]; then
-    echo "Creating virtual environment in $VENV_DIR..."
-    python3 -m venv "$VENV_DIR"
-fi
-
-source "$VENV_DIR/bin/activate"
-
-if [ -f "$(dirname "$0")/requirements.txt" ]; then
-    echo "Installing/updating Python dependencies..."
-    pip install --upgrade pip >/dev/null
-    pip install -r "$(dirname "$0")/requirements.txt"
-fi
 
 exec python3 -u -m app.main "$@"
